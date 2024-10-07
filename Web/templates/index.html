@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Venom Zpotica</title>
+    </head>
+    <body>
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap');
+            body {
+                font-family: 'Ubuntu', sans-serif;
+                margin: 10;
+                padding: 10;
+                align-content: center;
+                justify-content: center;
+                align-items: center;
+                min-height: 10vh;
+                background-color: aquamarine;
+                color: blueviolet;
+                display: ruby-base;
+                position: relative;
+            }
+
+            h1 {
+                color: orange;
+                text-align: center;
+                text-decoration: underline;
+                text-shadow: 1px 3px red;
+                font-size: 40px;
+            }
+
+            .chat-container {
+                max-width: 400px;
+                width: 100%;
+                background-color: aqua;
+                box-shadow: 0 0 10px rgba(0,0,0,0.1);
+                padding: 20px;
+                box-sizing: border-box;
+                border-radius: 60px;
+                display: flex;
+                flex-direction: column;
+                border: 10px solid black;
+            }
+
+            #chat-box {
+                flex-grow: 1;
+                overflow-y: auto;
+            }
+
+            @webkit-keyframe colorChange {
+                0% { background-color: black; }
+                50% {background-color: white; }
+                51% {background-color: white; }
+                100% { background-color: black; }
+            }
+
+            input {
+                padding: 10px;
+                marin: 10px;
+                background-color: black;
+                --webkit-animation-name: colorChange;
+                --webkit-animation-iteration-count: infinite;
+                --webkit-animation-duration: 4s;
+                border: 4px solid #ccc;
+                border-radius: 30px;
+                padding: 20px;
+                display: flex;
+            }
+
+            input[type="text"] {
+                color: red;
+            }
+
+            .ans {
+                padding: 8px 15px;
+                color: white;
+                border: 3px solid red;
+                border-radius: 20px;
+                cursor: pointer;
+            }
+
+            .ans:hover {
+                color: black;
+                border: 3px solid black;
+            }
+        </style>
+        <script>
+            function sendMessage() {
+                var userInput = document.getElementById('userInput').value;
+
+                fetch('/process_input', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ userInput: userInput})
+                })
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('assistant-response').innerHTML = data;
+                });
+            };
+        </script>
+        <h1>Venom Zpotica</h1>
+        <center><div class="chat-container">
+            <div id="chat-box"></div>
+            <input type="text" id="userInput" placeholder="Input">
+            <button class="ans" onclick="sendMessage()">Send</button>
+            <div id="assistant-response"></div>
+        </div>
+        </center>
+    </body>
+</html>
